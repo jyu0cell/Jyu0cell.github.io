@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人主页 · 冰蓝与青</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Font (Poppins 用于标题) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+               色彩系统标注（符合 WCAG AA 级对比度）
+               ============================================================
+               主色 (Primary)     : #d4e9ff  (冰蓝白)  HSL(210°, 100%, 92%)  RGB(212,233,255)
+               辅助色 (Secondary) : #b0d4f0  (浅灰蓝)  HSL(210°, 70%, 82%)   RGB(176,212,240)
+               强调色 (Accent)    : #2a9d8f  (青绿)    HSL(174°, 70%, 40%)   RGB(42,157,143)
+               背景渐变主色       : #e3f2fd  (极淡冰蓝) HSL(210°, 90%, 94%)
+               背景渐变辅色       : #c8e6e9  (淡青)    HSL(180°, 40%, 85%)
+               卡片背景           : rgba(255,255,255,0.6)  (半透白)
+               正文深色 (Text)    : #1a2a3a  (深蓝灰)  HSL(210°, 35%, 16%)  — 与主色背景对比度 > 12:1
+               辅助文字           : #3a4a5a  (中灰蓝)  HSL(210°, 20%, 28%)  — 与主色背景对比度 > 8:1
+               所有文字均满足 AA 级（≥4.5:1）
+               ============================================================ */
+
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            /* 冰蓝 → 青 渐变背景 */
+            background: linear-gradient(145deg, #e3f2fd 0%, #c8e6e9 100%);
+            /* 主色与辅助色混合 */
+        }
+
+        /* ===== 主卡片 ===== */
+        .profile-card {
+            max-width: 880px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.6); /* 半透白卡片 */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 3rem;
+            padding: 2.8rem 2.8rem;
+            box-shadow: 0 20px 60px rgba(42, 157, 143, 0.15), 
+                        0 0 0 1px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s;
+        }
+
+        /* ===== 头部：头像 + 自我介绍 ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.2rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 12px 30px rgba(42, 157, 143, 0.2);
+            background: #b0d4f0; /* 辅助色 */
+            flex-shrink: 0;
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+        .avatar:hover {
+            transform: scale(1.04);
+            border-color: #2a9d8f; /* 强调色 */
+        }
+
+        .intro h1 {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #1a2a3a; /* 正文深色 */
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        .intro h1 i {
+            color: #2a9d8f; /* 强调色点缀 */
+            font-size: 2rem;
+            margin-left: 0.3rem;
+        }
+
+        .intro .subhead {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem 1.5rem;
+            margin-top: 0.3rem;
+            font-size: 1.05rem;
+            color: #3a4a5a; /* 辅助文字 */
+        }
+        .intro .subhead .tag {
+            background: rgba(42, 157, 143, 0.12);
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(42, 157, 143, 0.15);
+            font-weight: 500;
+            color: #1a2a3a;
+        }
+        .intro .subhead i {
+            color: #2a9d8f;
+            margin-right: 4px;
+        }
+
+        /* ===== 内向人格描述 ===== */
+        .personality {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 2.5rem;
+            border-left: 5px solid #2a9d8f;
+            color: #1a2a3a;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .personality i {
+            color: #2a9d8f;
+            font-size: 1.6rem;
+        }
+        .personality strong {
+            color: #1a2a3a;
+            font-weight: 600;
+        }
+        .personality .highlight {
+            background: rgba(42, 157, 143, 0.1);
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        /* ===== 学习经历 ===== */
+        .section-title {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .section-title i {
+            color: #2a9d8f;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1rem;
+            color: #1a2a3a;
+            padding: 0.3rem 0;
+        }
+        .skill-item i {
+            color: #2a9d8f;
+            width: 1.4rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .skill-item span {
+            font-weight: 500;
+        }
+
+        /* ===== 兴趣爱好 ===== */
+        .hobbies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2rem;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .hobby-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.05rem;
+            color: #1a2a3a;
+        }
+        .hobby-item i {
+            color: #2a9d8f;
+            font-size: 1.5rem;
+            width: 2rem;
+            text-align: center;
+        }
+        .hobby-item .emoji {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        /* ===== 底部社交（可选，保留简洁） ===== */
+        .social-footer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(42, 157, 143, 0.15);
+        }
+        .social-footer a {
+            color: #3a4a5a;
+            font-size: 1.6rem;
+            transition: color 0.2s, transform 0.2s;
+            opacity: 0.7;
+        }
+        .social-footer a:hover {
+            color: #2a9d8f;
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 640px) {
+            .profile-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 2rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.8rem;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .intro h1 {
+                font-size: 2.2rem;
+            }
+            .intro .subhead {
+                justify-content: center;
+            }
+            .personality {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem 1.2rem;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 1.2rem;
+            }
+            .hobbies {
+                justify-content: center;
+            }
+        }
+        @media (max-width: 400px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+
+        <!-- ===== 头部 ===== -->
+        <div class="header">
+            <!-- 头像（使用在线生成，可替换） -->
+            <img class="avatar" 
+                 src="https://api.dicebear.com/9.x/avataaars/svg?seed=quiet&backgroundColor=b0d4f0" 
+                 alt="个人头像" />
+            <div class="intro">
+                <h1>
+                    林 清 <i class="fas fa-leaf"></i>
+                </h1>
+                <div class="subhead">
+                    <span><i class="fas fa-user-graduate"></i> 电子信息工程 · 大四</span>
+                    <span class="tag"><i class="fas fa-moon"></i> 内向 · 思考者</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 内向人格描述 ===== -->
+        <div class="personality">
+            <i class="fas fa-feather-alt"></i>
+            <div>
+                <strong>静水深流</strong> —— 我享受独处与专注，在代码与电路的世界里寻找秩序之美。
+                性格内敛，但内心充满对技术的热情。 <span class="highlight">“少言，多思，深行”</span>
+            </div>
+        </div>
+
+        <!-- ===== 学习经历 ===== -->
+        <div class="section-title">
+            <i class="fas fa-laptop-code"></i> 学习经历
+        </div>
+        <div class="skills-grid">
+            <div class="skill-item"><i class="fas fa-code"></i> <span>C语言</span></div>
+            <div class="skill-item"><i class="fab fa-python"></i> <span>Python</span></div>
+            <div class="skill-item"><i class="fas fa-microchip"></i> <span>STM32单片机</span></div>
+            <div class="skill-item"><i class="fas fa-exchange-alt"></i> <span>I2C协议</span></div>
+            <div class="skill-item"><i class="fas fa-bolt"></i> <span>串口通信</span></div>
+            <div class="skill-item"><i class="fas fa-eye"></i> <span>视觉 (OpenCV)</span></div>
+        </div>
+
+        <!-- ===== 兴趣爱好 ===== -->
+        <div class="section-title">
+            <i class="fas fa-heart"></i> 兴趣爱好
+        </div>
+        <div class="hobbies">
+            <div class="hobby-item"><i class="fas fa-headphones-alt"></i> 听音乐 · 古典与轻音</div>
+            <div class="hobby-item"><i class="fas fa-running"></i> 跑步 · 晨间 5 公里</div>
+            <div class="hobby-item"><span class="emoji">📚</span> 阅读 · 科幻与哲学</div>
+            <div class="hobby-item"><span class="emoji">🎹</span> 钢琴 · 业余自修</div>
+        </div>
+
+        <!-- ===== 底部社交（可选） ===== -->
+        <div class="social-footer">
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="Bilibili"><i class="fab fa-bilibili"></i></a>
+            <a href="#" aria-label="邮件"><i class="fas fa-envelope"></i></a>
+            <a href="#" aria-label="微信"><i class="fab fa-weixin"></i></a>
+        </div>
+
+    </div>
+</body>
+</html>
